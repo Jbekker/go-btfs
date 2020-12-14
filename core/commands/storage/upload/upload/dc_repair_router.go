@@ -438,7 +438,7 @@ func downloadAndSignContracts(contract *guardpb.Contract, rss *sessions.RenterSe
 			shardHash := contract.ContractMeta.ShardHash
 			shardIndex := contract.ContractMeta.ShardIndex
 			shardFileSize := contract.ContractMeta.ShardFileSize
-			host, err := hp.NextValidHost(price)
+			host, err := hp.NextValidHost(rss.SsId, price)
 			if err != nil {
 				terr := rss.To(sessions.RssToErrorEvent, err)
 				if terr != nil {

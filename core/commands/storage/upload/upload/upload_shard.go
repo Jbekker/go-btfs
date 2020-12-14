@@ -25,7 +25,7 @@ func UploadShard(rss *sessions.RenterSession, hp helper.IHostsProvider, price in
 				default:
 					break
 				}
-				host, err := hp.NextValidHost(price)
+				host, err := hp.NextValidHost(rss.SsId, price)
 				if err != nil {
 					terr := rss.To(sessions.RssToErrorEvent, err)
 					if terr != nil {
