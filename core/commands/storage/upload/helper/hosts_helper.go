@@ -4,11 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
-	"gopkg.in/natefinch/lumberjack.v2"
 	"os"
 	"sort"
+	"strings"
 	"sync"
 	"time"
 
@@ -20,6 +18,9 @@ import (
 	nodepb "github.com/tron-us/go-btfs-common/protos/node"
 
 	"github.com/libp2p/go-libp2p-core/peer"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 var renterLog = initLogger("renter.log").Sugar()
@@ -135,6 +136,11 @@ func (p *HostsProvider) init() (err error) {
 	if err != nil {
 		return err
 	}
+	var hs []string
+	for _, h := range p.hosts {
+		hs = append(hs, h.NodeId)
+	}
+	renterLog.Info("hosts:", strings.Join(hs, ","))
 	peers, err := p.cp.Api.Swarm().Peers(p.cp.Ctx)
 	if err != nil {
 		log.Debug(err)
