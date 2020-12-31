@@ -265,7 +265,7 @@ LOOP:
 				p.needHigherPrice = true
 				continue
 			}
-			ctx, _ := context.WithTimeout(p.ctx, 3*time.Second)
+			ctx, _ := context.WithTimeout(p.ctx, 10*time.Second)
 			if err := p.cp.Api.Swarm().Connect(ctx, peer.AddrInfo{ID: id}); err != nil {
 				p.Lock()
 				p.hosts = append(p.hosts, host)
